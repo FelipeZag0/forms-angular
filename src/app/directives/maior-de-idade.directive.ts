@@ -4,23 +4,21 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@an
 @Directive({
   selector: '[maiorIdadeValidator]',
   providers: [{
-    provide: NG_VALIDATORS,
-    useExisting: MaiorIdadeDirective,
+    provide: NG_VALIDATORS, useExisting: MaiorIdadeValidator,
     multi: true
-  }]
+  }],
 })
-export class MaiorIdadeDirective implements Validator {
-
-  constructor() { }
+export class MaiorIdadeValidator implements Validator {
   validate(control: AbstractControl): ValidationErrors | null {
+
     const dataNascimento = control.value;
     const anoNascimento = new Date(dataNascimento).getFullYear();
+
     const anoNascMais18 = anoNascimento + 18;
-    const anoAtual = new Date().getFullYear();
+    const anoAtual = new Date().getFullYear()
 
     const ehMaior = anoNascMais18 <= anoAtual;
-
-    return ehMaior ? null : {'maiorIdadeValidator': true};
+    return ehMaior ? null: { 'maiorIdadeValidator' : true }
   }
-
+  
 }
